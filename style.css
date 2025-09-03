@@ -1,85 +1,125 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Voix d'Ailleurs - Podcast</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-</head>
-<body>
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
 
-  <header>
-    <div class="container">
-      <h1>Voix d'Ailleurs</h1>
-      <nav>
-        <ul>
-          <li><a href="#">Accueil</a></li>
-          <li><a href="#">À propos</a></li>
-          <li><a href="#">Épisodes</a></li>
-          <li><a href="#">Ressources</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+body {
+  background: #faf9f6; /* ton très clair, beige/gris */
+  color: #333;
+  line-height: 1.6;
+}
 
-  <section class="hero">
-    <div class="container">
-      <h2>Des récits, des parcours, des réalités</h2>
-      <p>Un podcast qui donne la parole à celles et ceux que l’on n’entend pas assez.</p>
-      <a href="#" class="btn">🎧 Écouter le dernier épisode</a>
-    </div>
-  </section>
+/* Header */
+header {
+  background: #ffffff;
+  border-bottom: 1px solid #e6e6e6;
+  padding: 1rem 0;
+}
 
-  <section class="about">
-    <div class="container">
-      <h3>Pourquoi ce podcast ?</h3>
-      <p>
-        Parce que derrière chaque immigration, il y a une histoire humaine.
-        Ce podcast donne la parole à celles et ceux qui ont vécu l'exil, l’attente, l’intégration — pour sensibiliser, informer, et surtout, créer du lien.
-      </p>
-    </div>
-  </section>
+header h1 {
+  color: #444;
+  margin: 0;
+}
 
-  <section class="episodes">
-    <div class="container">
-      <h3>🎙️ Épisodes</h3>
-      <div class="episode-card">
-        <h4>Épisode 1 : Le premier hiver</h4>
-        <p>Lamine raconte son arrivée en France en plein mois de janvier, sans logement ni réseau.</p>
-        <a href="#">▶️ Écouter</a>
-      </div>
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
 
-      <!-- Tu peux dupliquer ce bloc pour chaque épisode -->
-    </div>
-  </section>
+nav a {
+  color: #444;
+  text-decoration: none;
+  font-weight: 500;
+}
 
-  <section class="resources">
-    <div class="container">
-      <h3>🤝 Ressources utiles</h3>
-      <ul>
-        <li><a href="#">France Terre d’Asile</a></li>
-        <li><a href="#">La Cimade</a></li>
-        <li><a href="#">Permanences juridiques gratuites</a></li>
-        <li><a href="#">Trouver un hébergement d’urgence</a></li>
-      </ul>
-    </div>
-  </section>
+nav a:hover {
+  color: #00798c; /* petite touche de couleur */
+}
 
-  <section class="contact">
-    <div class="container">
-      <h3>📬 Contact</h3>
-      <p>Une suggestion, un témoignage à partager ?</p>
-      <p>📧 contact@voixdailleurs.com</p>
-    </div>
-  </section>
+/* Hero */
+.hero {
+  background: #f5f5f0;
+  color: #222;
+  text-align: center;
+  padding: 4rem 2rem;
+  border-bottom: 1px solid #e0e0e0;
+}
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 Voix d’Ailleurs — Tous droits réservés</p>
-    </div>
-  </footer>
+.hero h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #222;
+}
 
-</body>
-</html>
+.hero p {
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+.btn {
+  display: inline-block;
+  background: #ffeecf; /* ton pastel doux */
+  color: #444;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background: #ffdca8;
+}
+
+/* Sections */
+section {
+  padding: 3rem 2rem;
+}
+
+section h3 {
+  color: #00798c;
+  margin-bottom: 1rem;
+}
+
+.episode-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Ressources */
+.resources ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.resources li {
+  margin-bottom: 0.5rem;
+}
+
+.resources a {
+  color: #444;
+  text-decoration: none;
+  border-bottom: 1px dotted #ccc;
+}
+
+.resources a:hover {
+  color: #00798c;
+  border-bottom: 1px solid #00798c;
+}
+
+/* Footer */
+footer {
+  background: #f0f0eb;
+  color: #555;
+  text-align: center;
+  padding: 1rem 0;
+  border-top: 1px solid #ddd;
+}
