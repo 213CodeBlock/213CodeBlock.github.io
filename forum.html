@@ -6,23 +6,63 @@
   <title>Forum — Voix d'Ailleurs</title>
   <link rel="stylesheet" href="style.css?v=2" />
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkfK4j0TYOqCczFjH1C4ZfZ6FZ8X5dGq09NdXBJd3wa9u0wP4gkW6+5ig=="
-    crossorigin="anonymous" referrerpolicy="no-referrer">
   <style>
-    .social-icons { display: flex; gap: 0.75rem; }
-    .social-icons a { color: #444; font-size: 1.2rem; text-decoration: none; }
-    .social-icons a:hover { color: #00798c; }
-    /* autres styles spécifiques forum (catégories, sujets, etc.) */
+    .header-wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .nav-wrap{display:flex;align-items:center;gap:1.5rem}
+    .social-icons{display:flex;gap:0.75rem}
+    .social-icons a{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;color:#444;text-decoration:none}
+    .social-icons a:hover{color:#00798c}
+    .social-icons svg{width:20px;height:20px;fill:currentColor;display:block}
+
+    .forum-hero { background: #f5f5f0; border-bottom: 1px solid #e0e0e0; }
+    .forum-hero .container { padding: 3rem 2rem; text-align: center; }
+    .breadcrumbs { font-size: 0.9rem; color: #666; margin-bottom: 1rem; }
+
+    .forum-layout { display: grid; grid-template-columns: 1fr 300px; gap: 2rem; align-items: start; padding:2rem; }
+    @media (max-width: 960px) { .forum-layout { grid-template-columns: 1fr; } }
+
+    .card { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+    .card-header { padding: 1rem 1.25rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+    .card-title { margin: 0; color: #00798c; font-size: 1.1rem; }
+    .card-body { padding: 1rem 1.25rem; }
+
+    .categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    .category { border: 1px solid #e8e8e8; border-radius: 8px; padding: 1rem; background: #fff; }
+    .category h4 { margin-bottom: 0.25rem; color: #333; font-size: 1rem; }
+    .category p { color: #666; font-size: 0.92rem; margin-bottom: 0.5rem; }
+    .category small { color: #888; }
+
+    .topic-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    .topic-table th, .topic-table td { padding: 0.75rem; border-bottom: 1px solid #eee; text-align: left; vertical-align: top; }
+    .topic-table th { color: #444; font-weight: 600; background: #fafafa; }
+    .topic-title { color: #00798c; text-decoration: none; font-weight: 600; }
+    .topic-title:hover { text-decoration: underline; }
+    .topic-meta { color: #777; font-size: 0.85rem; }
+
+    .new-topic-form { display: grid; gap: 0.75rem; }
+    .form-row { display: grid; gap: 0.5rem; }
+    .form-row label { font-weight: 600; color: #444; }
+    .form-row input[type="text"], .form-row textarea, .form-row select { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #333; }
+    .form-row textarea { min-height: 140px; resize: vertical; }
+    .btn-primary { display: inline-block; background: #ffeecf; color: #444; padding: 0.7rem 1.25rem; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; }
+    .btn-primary:hover { background: #ffdca8; }
+
+    .aside { position: sticky; top: 1rem; }
+    .stat { display: flex; justify-content: space-between; margin-bottom: 0.4rem; color: #555; }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag { background: #f0f7f8; color: #276973; border: 1px solid #d6ecef; padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 0.85rem; }
+
+    .pagination { display: flex; gap: 0.5rem; align-items: center; }
+    .pagination a { text-decoration: none; color: #444; border: 1px solid #ddd; padding: 0.4rem 0.7rem; border-radius: 6px; }
+    .pagination a:hover { border-color: #00798c; color: #00798c; }
   </style>
 </head>
 <body>
   <header>
-    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:1rem;">
+    <div class="container header-wrap">
       <h1>Voix d'Ailleurs</h1>
       <nav aria-label="Navigation principale">
-        <ul style="display:flex; align-items:center; gap:1.5rem;">
+        <ul class="nav-wrap">
           <li><a href="index.html">Accueil</a></li>
           <li><a href="#">À propos</a></li>
           <li><a href="#">Épisodes</a></li>
@@ -31,12 +71,22 @@
           <li><a href="forum.html" aria-current="page">Forum</a></li>
         </ul>
       </nav>
-      <div class="social-icons">
-        <a href="https://www.youtube.com/tonchaine" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-        <a href="https://www.tiktok.com/@toncompte" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-        <a href="https://www.twitch.tv/toncompte" target="_blank" aria-label="Twitch"><i class="fa-brands fa-twitch"></i></a>
-        <a href="https://www.facebook.com/tonpage" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-        <a href="https://www.patreon.com/toncompte" target="_blank" aria-label="Patreon"><i class="fa-brands fa-patreon"></i></a>
+      <div class="social-icons" aria-label="Réseaux sociaux">
+        <a href="https://www.youtube.com/tonchaine" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube">
+          <svg viewBox="0 0 576 512" aria-hidden="true"><path d="M549.7 124.1c-6.3-23.7-24.9-42.3-48.6-48.6C458.8 64 288 64 288 64s-170.8 0-213.1 10.9c-23.7 6.3-42.3 24.9-48.6 48.6C16.4 166.4 16.4 256 16.4 256s0 89.6 9.9 131.9c6.3 23.7 24.9 42.3 48.6 48.6C117.2 448 288 448 288 448s170.8 0 213.1-10.9c23.7-6.3 42.3-24.9 48.6-48.6 9.9-42.3 9.9-131.9 9.9-131.9s0-89.6-9.9-131.9zM232 338.5v-165l142 82.5-142 82.5z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@toncompte" target="_blank" rel="noopener" aria-label="TikTok" title="TikTok">
+          <svg viewBox="0 0 448 512" aria-hidden="true"><path d="M448 209.9v89.1a210.1 210.1 0 0 1-122.1-39.5v126.1A126.4 126.4 0 1 1 199.8 261v89.6a37 37 0 1 0 52.4 33V0h74.7a134.5 134.5 0 0 0 121.1 134.2v75.7z"/></svg>
+        </a>
+        <a href="https://www.twitch.tv/toncompte" target="_blank" rel="noopener" aria-label="Twitch" title="Twitch">
+          <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M80 32L32 128v320h128v32h64l32-32h80l96-96V32H80zm352 288l-64 64H272l-32 32v-32H144V64h288v256zM320 144h-48v112h48V144zm96 0h-48v112h48V144z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/tonpage" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
+          <svg viewBox="0 0 320 512" aria-hidden="true"><path d="M279.14 288l14.22-92.66h-88.91V127.77c0-25.35 12.42-50.06 52.24-50.06H297V6.26S262.43 0 231.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h87.39v224h104.2V288z"/></svg>
+        </a>
+        <a href="https://www.patreon.com/toncompte" target="_blank" rel="noopener" aria-label="Patreon" title="Patreon">
+          <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M32 64h96v384H32zM320 64c88.4 0 160 71.6 160 160s-71.6 160-160 160-160-71.6-160-160S231.6 64 320 64z"/></svg>
+        </a>
       </div>
     </div>
   </header>
@@ -49,11 +99,164 @@
     </div>
   </section>
 
-  <!-- ici tu remets tout le contenu du forum (catégories, sujets récents, formulaire, aside, footer) comme déjà fait -->
+  <main class="container">
+    <div class="forum-layout">
+      <section class="card" aria-labelledby="forum-categories">
+        <div class="card-header">
+          <h3 id="forum-categories" class="card-title">Catégories</h3>
+        </div>
+        <div class="card-body">
+          <div class="categories" role="list">
+            <article class="category" role="listitem">
+              <h4>Parcours & témoignages</h4>
+              <p>Racontez votre histoire, vos étapes, vos conseils.</p>
+              <small>152 sujets • Dernier message : il y a 2 j</small>
+            </article>
+            <article class="category" role="listitem">
+              <h4>Démarches & droits</h4>
+              <p>Questions sur l’asile, les titres de séjour, le travail, la santé.</p>
+              <small>312 sujets • Dernier message : il y a 4 h</small>
+            </article>
+            <article class="category" role="listitem">
+              <h4>Hébergement & entraide</h4>
+              <p>Solutions d’accueil, réseaux d’entraide, aides locales.</p>
+              <small>98 sujets • Dernier message : il y a 1 j</small>
+            </article>
+            <article class="category" role="listitem">
+              <h4>Annonces du podcast</h4>
+              <p>Nouveaux épisodes, coulisses, appels à témoignages.</p>
+              <small>27 sujets • Dernier message : il y a 6 h</small>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <aside class="aside" aria-labelledby="forum-aside">
+        <div class="card" style="margin-bottom:1rem;">
+          <div class="card-header"><h3 id="forum-aside" class="card-title">En un coup d’œil</h3></div>
+          <div class="card-body">
+            <div class="stat"><span>Membres</span><strong>1 284</strong></div>
+            <div class="stat"><span>Sujets</span><strong>639</strong></div>
+            <div class="stat"><span>Messages</span><strong>4 902</strong></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><h3 class="card-title">Tags populaires</h3></div>
+          <div class="card-body">
+            <div class="tag-list" aria-label="Tags populaires">
+              <span class="tag">asile</span>
+              <span class="tag">hébergement</span>
+              <span class="tag">travail</span>
+              <span class="tag">santé</span>
+              <span class="tag">dépôt dossier</span>
+              <span class="tag">études</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <section class="card" style="margin-top:2rem;" aria-labelledby="recent-topics">
+      <div class="card-header">
+        <h3 id="recent-topics" class="card-title">Sujets récents</h3>
+        <nav class="pagination" aria-label="Pagination des sujets">
+          <a href="#" aria-label="Page précédente">‹</a>
+          <a href="#" aria-current="page">1</a>
+          <a href="#">2</a>
+          <a href="#">3</a>
+          <a href="#" aria-label="Page suivante">›</a>
+        </nav>
+      </div>
+      <div class="card-body" style="overflow-x:auto;">
+        <table class="topic-table" role="table">
+          <thead>
+            <tr>
+              <th scope="col">Sujet</th>
+              <th scope="col">Catégorie</th>
+              <th scope="col">Réponses</th>
+              <th scope="col">Activité</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <a href="#" class="topic-title">Retour d’expérience : premier logement solidaire</a>
+                <div class="topic-meta">par Nadia • il y a 3 h</div>
+              </td>
+              <td>Hébergement & entraide</td>
+              <td>14</td>
+              <td>il y a 12 min</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="#" class="topic-title">Comprendre la procédure Dublin (guide simple)</a>
+                <div class="topic-meta">par Samir • hier</div>
+              </td>
+              <td>Démarches & droits</td>
+              <td>8</td>
+              <td>il y a 1 h</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="#" class="topic-title">Trouver un médecin généraliste sans carte vitale ?</a>
+                <div class="topic-meta">par Aisha • il y a 2 j</div>
+              </td>
+              <td>Santé</td>
+              <td>21</td>
+              <td>il y a 5 h</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:2rem;" aria-labelledby="new-topic">
+      <div class="card-header">
+        <h3 id="new-topic" class="card-title">Créer un nouveau sujet</h3>
+      </div>
+      <div class="card-body">
+        <form class="new-topic-form" id="new-topic-form">
+          <div class="form-row">
+            <label for="topic-title-input">Titre</label>
+            <input type="text" id="topic-title-input" name="title" placeholder="Ex. Vos conseils pour la première inscription OFII" required />
+          </div>
+          <div class="form-row">
+            <label for="topic-category-select">Catégorie</label>
+            <select id="topic-category-select" name="category" required>
+              <option value="" disabled selected>Choisir une catégorie</option>
+              <option>Parcours & témoignages</option>
+              <option>Démarches & droits</option>
+              <option>Hébergement & entraide</option>
+              <option>Annonces du podcast</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="topic-content-textarea">Message</label>
+            <textarea id="topic-content-textarea" name="content" placeholder="Décrivez votre situation ou votre question…" required></textarea>
+          </div>
+          <div>
+            <button type="submit" class="btn-primary">Publier</button>
+          </div>
+        </form>
+        <p class="topic-meta" style="margin-top:0.5rem;">Les publications sont modérées avant mise en ligne.</p>
+      </div>
+    </section>
+  </main>
+
   <footer>
     <div class="container">
       <p>&copy; 2025 Voix d’Ailleurs — Tous droits réservés</p>
     </div>
   </footer>
+
+  <script>
+    document.getElementById('new-topic-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const title = document.getElementById('topic-title-input').value.trim();
+      alert('Votre sujet "' + title + '" a été pris en compte (démo).');
+      this.reset();
+    });
+  </script>
 </body>
 </html>
