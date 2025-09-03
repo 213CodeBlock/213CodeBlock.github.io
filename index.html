@@ -6,19 +6,11 @@
   <title>Voix d'Ailleurs - Podcast</title>
   <link rel="stylesheet" href="style.css?v=2">
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkfK4j0TYOqCczFjH1C4ZfZ6FZ8X5dGq09NdXBJd3wa9u0wP4gkW6+5ig=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
   <style>
-    /* Aside */
-    .aside { position: sticky; top: 1rem; }
-    .stat { display: flex; justify-content: space-between; margin-bottom: 0.4rem; color: #555; }
-    .tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .tag { background: #f0f7f8; color: #276973; border: 1px solid #d6ecef; padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 0.85rem; }
-
-    /* Pagination */
-    .pagination { display: flex; gap: 0.5rem; align-items: center; }
-    .pagination a { text-decoration: none; color: #444; border: 1px solid #ddd; padding: 0.4rem 0.7rem; border-radius: 6px; }
-    .pagination a:hover { border-color: #00798c; color: #00798c; }
-
-    /* Social icons */
     .social-icons { display: flex; gap: 0.75rem; }
     .social-icons a { color: #444; font-size: 1.2rem; text-decoration: none; }
     .social-icons a:hover { color: #00798c; }
@@ -26,28 +18,28 @@
 </head>
 <body>
 
-    <header>
-        <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:1rem;">
-          <h1>Voix d'Ailleurs</h1>
-          <nav aria-label="Navigation principale">
-            <ul style="display:flex; align-items:center; gap:1.5rem;">
-              <li><a href="index.html">Accueil</a></li>
-              <li><a href="#">À propos</a></li>
-              <li><a href="#">Épisodes</a></li>
-              <li><a href="#">Ressources</a></li>
-              <li><a href="#">Contact</a></li>
-              <li><a href="forum.html" aria-current="page">Forum</a></li>
-            </ul>
-          </nav>
-          <div class="social-icons">
-            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-            <a href="#" aria-label="Twitch"><i class="fab fa-twitch"></i></a>
-            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-            <a href="#" aria-label="Patreon"><i class="fab fa-patreon"></i></a>
-          </div>
-        </div>
-      </header>
+  <header>
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:1rem;">
+      <h1>Voix d'Ailleurs</h1>
+      <nav>
+        <ul style="display:flex; align-items:center; gap:1.5rem;">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="#">À propos</a></li>
+          <li><a href="#">Épisodes</a></li>
+          <li><a href="#">Ressources</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="forum.html">Forum</a></li>
+        </ul>
+      </nav>
+      <div class="social-icons">
+        <a href="https://www.youtube.com/tonchaine" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://www.tiktok.com/@toncompte" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://www.twitch.tv/toncompte" target="_blank" aria-label="Twitch"><i class="fa-brands fa-twitch"></i></a>
+        <a href="https://www.facebook.com/tonpage" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://www.patreon.com/toncompte" target="_blank" aria-label="Patreon"><i class="fa-brands fa-patreon"></i></a>
+      </div>
+    </div>
+  </header>
 
   <section class="hero">
     <div class="container">
@@ -75,8 +67,6 @@
         <p>Lamine raconte son arrivée en France en plein mois de janvier, sans logement ni réseau.</p>
         <a href="#">▶️ Écouter</a>
       </div>
-
-      <!-- Tu peux dupliquer ce bloc pour chaque épisode -->
     </div>
   </section>
 
