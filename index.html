@@ -32,6 +32,7 @@
           <li><a href="#">Ressources</a></li>
           <li><a href="#">Contact</a></li>
           <li><a href="forum.html">Forum</a></li>
+          <li><a href="donation.html">Donation</a></li>
         </ul>
       </nav>
       <div class="social-icons" aria-label="Réseaux sociaux">
@@ -63,7 +64,7 @@
     <div class="container">
       <h2>Des récits, des parcours, des réalités</h2>
       <p>Un podcast qui donne la parole à celles et ceux que l’on n’entend pas assez.</p>
-      <a href="#" class="btn">🎧 Écouter le dernier épisode</a>
+      <button class="btn" id="open-player">🎧 Écouter le dernier épisode</button>
     </div>
   </section>
 
@@ -72,7 +73,7 @@
       <h3>Pourquoi ce podcast ?</h3>
       <p>
         Parce que derrière chaque immigration, il y a une histoire humaine.
-        Ce podcast donne la parole à celles et ceux qui ont vécu l'exil, l’attente, l’intégration — pour sensibiliser, informer, et surtout, créer du lien.
+        Ce podcast donne la parole à celles et ceux qui ont vécu l'exil, l’attente, l’intégration - pour sensibiliser, informer, et surtout, créer du lien.
       </p>
     </div>
   </section>
@@ -92,10 +93,10 @@
     <div class="container">
       <h3>🤝 Ressources utiles</h3>
       <ul>
-        <li><a href="#">France Terre d’Asile</a></li>
-        <li><a href="#">La Cimade</a></li>
-        <li><a href="#">Permanences juridiques gratuites</a></li>
-        <li><a href="#">Trouver un hébergement d’urgence</a></li>
+        <li><a href="https://www.france-terre-asile.org/">France Terre d’Asile</a></li>
+        <li><a href="https://www.lacimade.org/">La Cimade</a></li>
+        <li><a href="https://www.service-public.fr/particuliers/vosdroits/F20706">Permanences juridiques gratuites</a></li>
+        <li><a href="https://coeur-de-ville.com/"> Coeur de ville - Trouver un hébergement d’urgence</a></li>
       </ul>
     </div>
   </section>
@@ -107,6 +108,87 @@
       <p>📧 contact@voixdailleurs.com</p>
     </div>
   </section>
+  <!-- Modale lecteur YouTube -->
+<div class="video-modal" id="video-modal" aria-hidden="true">
+    <div class="video-backdrop" id="video-backdrop"></div>
+  
+    <div class="video-dialog" role="dialog" aria-modal="true" aria-labelledby="video-title">
+      <div class="video-header">
+        <h3 id="video-title">Dernier épisode</h3>
+        <button class="video-close" id="video-close" aria-label="Fermer">×</button>
+      </div>
+      <div class="video-body">
+        <div class="video-frame">
+          <iframe id="video-iframe"
+            title="Lecteur YouTube"
+            src=""
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            referrerpolicy="strict-origin-when-cross-origin">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <style>
+    .video-modal { position: fixed; inset: 0; display: none; }
+    .video-modal[aria-hidden="false"] { display: block; }
+    .video-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.5); }
+    .video-dialog {
+      position: absolute; inset: 5% 50% auto 50%;
+      transform: translate(-50%, 0);
+      width: min(900px, 92vw);
+      background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.2);
+      overflow: hidden;
+    }
+    .video-header { display: flex; justify-content: space-between; align-items: center; padding: .75rem 1rem; border-bottom: 1px solid #eee; }
+    .video-header h3 { margin: 0; color: #333; }
+    .video-close { background: transparent; border: 0; font-size: 1.5rem; line-height: 1; cursor: pointer; color: #444; }
+    .video-close:hover { color: #00798c; }
+    .video-body { padding: 0; }
+    .video-frame { position: relative; width: 100%; padding-top: 56.25%; }
+    .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    @media (max-width: 640px) {
+      .video-dialog { inset: 2% 50% auto 50%; width: 96vw; }
+      .video-header { padding: .6rem .8rem; }
+    }
+  </style>
+  
+  <script>
+    // Remplacer par l'ID de ta vidéo YouTube non répertoriée
+    // Exemple d'URL partage YouTube: https://youtu.be/ABCD1234xyz  -> ID = ABCD1234xyz
+    const YT_VIDEO_ID = "ABCD1234xyz";
+  
+    const openBtn = document.getElementById("open-player");
+    const modal = document.getElementById("video-modal");
+    const closeBtn = document.getElementById("video-close");
+    const backdrop = document.getElementById("video-backdrop");
+    const iframe = document.getElementById("video-iframe");
+  
+    function openModal() {
+      // Utilise le domaine nocookie pour limiter le tracking
+      iframe.src = "https://www.youtube-nocookie.com/embed/" + YT_VIDEO_ID + "?autoplay=1&rel=0";
+      modal.setAttribute("aria-hidden", "false");
+      closeBtn.focus();
+      document.body.style.overflow = "hidden";
+    }
+  
+    function closeModal() {
+      modal.setAttribute("aria-hidden", "true");
+      iframe.src = ""; // stoppe la vidéo
+      document.body.style.overflow = "";
+      openBtn.focus();
+    }
+  
+    openBtn.addEventListener("click", openModal);
+    closeBtn.addEventListener("click", closeModal);
+    backdrop.addEventListener("click", closeModal);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.getAttribute("aria-hidden") === "false") closeModal();
+    });
+  </script>
+  
 
   <footer>
     <div class="container">

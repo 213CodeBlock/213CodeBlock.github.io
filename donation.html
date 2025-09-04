@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Faire un don — Voix d'Ailleurs</title>
+  <link rel="stylesheet" href="style.css?v=2">
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <style>
+    .header-wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .nav-wrap{display:flex;align-items:center;gap:1.5rem}
+    .social-icons{display:flex;gap:0.75rem}
+    .social-icons a{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;color:#444;text-decoration:none}
+    .social-icons a:hover{color:#00798c}
+    .social-icons svg{width:20px;height:20px;fill:currentColor;display:block}
+
+    .don-hero{background:#f5f5f0;border-bottom:1px solid #e0e0e0;text-align:center;padding:3rem 2rem}
+    .don-wrap{max-width:900px;margin:2rem auto;display:grid;grid-template-columns:1fr 360px;gap:1.5rem}
+    @media (max-width: 980px){.don-wrap{grid-template-columns:1fr}}
+    .card{background:#fff;border:1px solid #e0e0e0;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+    .card-header{padding:1rem 1.25rem;border-bottom:1px solid #eee}
+    .card-body{padding:1rem 1.25rem}
+    .segmented{display:inline-grid;grid-auto-flow:column;border:1px solid #ddd;border-radius:999px;overflow:hidden}
+    .segmented input{position:absolute;opacity:0;pointer-events:none}
+    .segmented label{padding:.5rem .9rem;cursor:pointer;font-weight:600;color:#444}
+    .segmented input:checked + label{background:#ffeecf}
+    .amounts{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin:.75rem 0}
+    @media (max-width:640px){.amounts{grid-template-columns:repeat(3,1fr)}}
+    .btn-chip{padding:.75rem;border:1px solid #ddd;border-radius:10px;background:#fff;cursor:pointer;font-weight:600}
+    .btn-chip.active{border-color:#00798c}
+    .inline{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+    .field{display:grid;gap:.35rem;margin:.75rem 0}
+    .field input[type="number"], .field input[type="text"], .field input[type="email"]{
+      width:100%;padding:.7rem .8rem;border:1px solid #ddd;border-radius:8px
+    }
+    .hint{color:#777;font-size:.9rem}
+    .paymethods{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem}
+    .pill{border:1px solid #ddd;border-radius:999px;padding:.35rem .7rem;font-size:.9rem}
+    .summary{font-size:.95rem}
+    .summary strong{color:#222}
+    .btn-primary{display:inline-block;background:#ffeecf;color:#444;padding:.75rem 1.25rem;border-radius:8px;border:none;font-weight:700;cursor:pointer}
+    .btn-primary:hover{background:#ffdca8}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-wrap">
+      <div class="branding">
+        <img src="images/logo.png" alt="Logo Voix d'Ailleurs" class="logo">
+        <h1>Voix d'Ailleurs <span class="subtitle">Podcast</span></h1>
+      </div>
+      <nav>
+        <ul class="nav-wrap">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="about.html">À propos</a></li>
+          <li><a href="#">Épisodes</a></li>
+          <li><a href="#">Ressources</a></li>
+          <li><a href="donation.html" aria-current="page">Don</a></li>
+          <li><a href="forum.html">Forum</a></li>
+        </ul>
+      </nav>
+      <div class="social-icons" aria-label="Réseaux sociaux">
+        <a href="https://www.youtube.com/@SansFrontières-SF" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube">
+          <svg viewBox="0 0 576 512" aria-hidden="true"><path d="M549.7 124.1c-6.3-23.7-24.9-42.3-48.6-48.6C458.8 64 288 64 288 64s-170.8 0-213.1 10.9c-23.7 6.3-42.3 24.9-48.6 48.6C16.4 166.4 16.4 256 16.4 256s0 89.6 9.9 131.9c6.3 23.7 24.9 42.3 48.6 48.6C117.2 448 288 448 288 448s170.8 0 213.1-10.9c23.7-6.3 42.3-24.9 48.6-48.6 9.9-42.3 9.9-131.9 9.9-131.9s0-89.6-9.9-131.9zM232 338.5v-165l142 82.5-142 82.5z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@toncompte" target="_blank" rel="noopener" aria-label="TikTok" title="TikTok">
+          <svg viewBox="0 0 448 512" aria-hidden="true"><path d="M448 209.9v89.1a210.1 210.1 0 0 1-122.1-39.5v126.1A126.4 126.4 0 1 1 199.8 261v89.6a37 37 0 1 0 52.4 33V0h74.7a134.5 134.5 0 0 0 121.1 134.2v75.7z"/></svg>
+        </a>
+        <a href="https://www.twitch.tv/toncompte" target="_blank" rel="noopener" aria-label="Twitch" title="Twitch">
+          <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M80 32L32 128v320h128v32h64l32-32h80l96-96V32H80zm352 288l-64 64H272l-32 32v-32H144V64h288v256zM320 144h-48v112h48V144zm96 0h-48v112h48V144z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/tonpage" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
+          <svg viewBox="0 0 320 512" aria-hidden="true"><path d="M279.14 288l14.22-92.66h-88.91V127.77c0-25.35 12.42-50.06 52.24-50.06H297V6.26S262.43 0 231.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h87.39v224h104.2V288z"/></svg>
+        </a>
+        <a href="https://www.patreon.com/toncompte" target="_blank" rel="noopener" aria-label="Patreon" title="Patreon">
+          <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M32 64h96v384H32zM320 64c88.4 0 160 71.6 160 160s-71.6 160-160 160-160-71.6-160-160S231.6 64 320 64z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="don-hero">
+    <div class="container">
+      <h2>Faire un don</h2>
+      <p>Chaque contribution nous aide à produire des épisodes utiles, accessibles et sincères.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="don-wrap">
+      <!-- Formulaire -->
+      <section class="card" aria-labelledby="donner">
+        <div class="card-header"><h3 id="donner">Votre soutien</h3></div>
+        <div class="card-body">
+          <form id="don-form">
+            <div class="field">
+              <span id="type-label" class="hint">Type de don</span>
+              <div class="segmented" role="radiogroup" aria-labelledby="type-label">
+                <input type="radio" id="don-unique" name="donType" value="one_time" checked>
+                <label for="don-unique">Unique</label>
+                <input type="radio" id="don-mensuel" name="donType" value="monthly">
+                <label for="don-mensuel">Mensuel</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="montant">Montant</label>
+              <div class="amounts" id="amounts">
+                <button type="button" class="btn-chip" data-amount="5">5 €</button>
+                <button type="button" class="btn-chip" data-amount="10">10 €</button>
+                <button type="button" class="btn-chip" data-amount="20">20 €</button>
+                <button type="button" class="btn-chip" data-amount="50">50 €</button>
+              </div>
+              <div class="inline">
+                <input id="montant" name="amount" type="number" min="1" step="1" placeholder="Montant libre" required>
+                <span class="hint" id="period-hint">Une seule fois</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="email">Email (reçu)</label>
+              <input id="email" name="email" type="email" placeholder="vous@example.com" required>
+            </div>
+
+            <div class="field">
+              <span class="hint">Moyen de paiement</span>
+              <div class="paymethods">
+                <span class="pill">Carte</span>
+                <span class="pill">Apple Pay</span>
+                <span class="pill">Google Pay</span>
+                <span class="pill">SEPA</span>
+              </div>
+            </div>
+
+            <div class="inline" style="margin-top:.5rem">
+              <button type="submit" class="btn-primary">Payer</button>
+              <span class="hint">Chiffrement et traitement sécurisés</span>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Récapitulatif -->
+      <aside class="card" aria-labelledby="recap">
+        <div class="card-header"><h3 id="recap">Récapitulatif</h3></div>
+        <div class="card-body summary">
+          <p>Type: <strong id="s-type">Don unique</strong></p>
+          <p>Montant: <strong id="s-amount">—</strong></p>
+          <p>Fréquence: <strong id="s-period">Une seule fois</strong></p>
+          <hr style="border:none;border-top:1px solid #eee;margin:.75rem 0" />
+          <p id="s-note" class="hint">Merci pour votre soutien.</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Voix d’Ailleurs — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script>
+    // UI state
+    const chips = Array.from(document.querySelectorAll('.btn-chip'));
+    const amountInput = document.getElementById('montant');
+    const typeRadios = Array.from(document.querySelectorAll('input[name="donType"]'));
+    const periodHint = document.getElementById('period-hint');
+
+    const sType = document.getElementById('s-type');
+    const sAmount = document.getElementById('s-amount');
+    const sPeriod = document.getElementById('s-period');
+    const sNote = document.getElementById('s-note');
+
+    function formatEuro(v){
+      if(!v || isNaN(v)) return '—';
+      return new Intl.NumberFormat('fr-FR', { style:'currency', currency:'EUR' }).format(v);
+    }
+
+    function refreshSummary(){
+      const selectedType = document.querySelector('input[name="donType"]:checked').value;
+      const v = parseFloat(amountInput.value);
+      sType.textContent = selectedType === 'monthly' ? 'Don mensuel' : 'Don unique';
+      sAmount.textContent = formatEuro(v);
+      sPeriod.textContent = selectedType === 'monthly' ? 'Chaque mois' : 'Une seule fois';
+      sNote.textContent = selectedType === 'monthly'
+        ? 'Vous pourrez mettre en pause ou arrêter le don quand vous le souhaitez.'
+        : 'Merci pour votre geste.';
+      periodHint.textContent = sPeriod.textContent;
+    }
+
+    chips.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        chips.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        amountInput.value = btn.dataset.amount;
+        refreshSummary();
+      });
+    });
+
+    amountInput.addEventListener('input', ()=>{
+      chips.forEach(b=>b.classList.remove('active'));
+      refreshSummary();
+    });
+
+    typeRadios.forEach(r=>r.addEventListener('change', refreshSummary));
+
+    // Init
+    refreshSummary();
+
+    // Soumission (placeholder)
+    document.getElementById('don-form').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const payload = {
+        type: document.querySelector('input[name="donType"]:checked').value,
+        amount: parseInt(amountInput.value, 10),
+        email: document.getElementById('email').value.trim(),
+        currency: 'EUR'
+      };
+      if(!payload.amount || payload.amount < 1){
+        alert('Veuillez saisir un montant valide.');
+        return;
+      }
+      alert((payload.type === 'monthly' ? 'Abonnement mensuel' : 'Don unique') + ' de ' + payload.amount + ' € — démo.\nIci, on redirigerait vers Stripe Checkout.');
+      // Exemple Stripe (à brancher côté serveur) :
+      // 1) POST /create-checkout-session { amount, interval? }
+      // 2) window.location = response.url
+    });
+  </script>
+</body>
+</html>
