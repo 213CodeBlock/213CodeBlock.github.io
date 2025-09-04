@@ -21,16 +21,20 @@
       box-shadow: 0 10px 30px rgba(0,0,0,.2);
       overflow: hidden;
     }
+    .video-dialog.vertical { width: min(420px, 92vw); } /* format Short */
+
     .video-header { display: flex; justify-content: space-between; align-items: center; padding: .75rem 1rem; border-bottom: 1px solid #eee; }
     .video-header h3 { margin: 0; color: #333; }
     .video-close { background: transparent; border: 0; font-size: 1.5rem; line-height: 1; cursor: pointer; color: #444; }
     .video-close:hover { color: #00798c; }
     .video-body { padding: 0; }
-    .video-frame { position: relative; width: 100%; padding-top: 56.25%; } /* par défaut 16:9 */
-    .video-frame.vertical { padding-top: 177.78%; } /* 9:16 Shorts */
+    .video-frame { position: relative; width: 100%; padding-top: 56.25%; } /* 16:9 */
+    .video-frame.vertical { padding-top: 177.78%; } /* 9:16 */
     .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
     @media (max-width: 640px) {
       .video-dialog { inset: 2% 50% auto 50%; width: 96vw; }
+      .video-dialog.vertical { width: 96vw; }
     }
   </style>
 </head>
@@ -53,7 +57,6 @@
         </ul>
       </nav>
       <div class="social-icons">
-        <!-- Icônes sociales -->
         <a href="https://www.youtube.com/@SansFrontières-SF" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
         <a href="https://www.tiktok.com/@toncompte" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
         <a href="https://www.twitch.tv/toncompte" target="_blank" aria-label="Twitch"><i class="fa-brands fa-twitch"></i></a>
@@ -121,7 +124,7 @@
   <!-- Modale lecteur YouTube -->
   <div class="video-modal" id="video-modal" aria-hidden="true">
     <div class="video-backdrop" id="video-backdrop"></div>
-    <div class="video-dialog" role="dialog" aria-modal="true" aria-labelledby="video-title">
+    <div class="video-dialog" id="video-dialog" role="dialog" aria-modal="true" aria-labelledby="video-title">
       <div class="video-header">
         <h3 id="video-title">Dernier épisode</h3>
         <button class="video-close" id="video-close" aria-label="Fermer">×</button>
@@ -142,20 +145,26 @@
 
   <script>
     const YT_VIDEO_ID = "BFk-HKRczbM"; // ton Short
-    const IS_SHORTS = true; // c'est un format vertical
+    const IS_SHORTS   = true;
 
     const openBtn  = document.getElementById("open-player");
     const modal    = document.getElementById("video-modal");
+    const dialog   = document.getElementById("video-dialog");
     const closeBtn = document.getElementById("video-close");
     const backdrop = document.getElementById("video-backdrop");
     const iframe   = document.getElementById("video-iframe");
     const frame    = document.getElementById("video-frame");
 
     function openModal() {
-      if (IS_SHORTS) frame.classList.add("vertical");
-      else frame.classList.remove("vertical");
-
-      iframe.src = `https://www.youtube-nocookie.com/embed/${YT_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+      if (IS_SHORTS) {
+        frame.classList.add("vertical");
+        dialog.classList.add("vertical");
+        iframe.src = `https://www.youtube-nocookie.com/embed/shorts/${YT_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+      } else {
+        frame.classList.remove("vertical");
+        dialog.classList.remove("vertical");
+        iframe.src = `https://www.youtube-nocookie.com/embed/${YT_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+      }
       modal.setAttribute("aria-hidden", "false");
       closeBtn.focus();
       document.body.style.overflow = "hidden";
@@ -163,7 +172,7 @@
 
     function closeModal() {
       modal.setAttribute("aria-hidden", "true");
-      iframe.src = ""; // stoppe la vidéo
+      iframe.src = "";
       document.body.style.overflow = "";
       openBtn?.focus();
     }
