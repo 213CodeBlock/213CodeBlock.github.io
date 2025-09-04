@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Épisodes — Voix d'Ailleurs</title>
+  <link rel="stylesheet" href="style.css?v=2">
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="logo.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Hero */
+    .episodes-hero{background:#f5f5f0;border-bottom:1px solid #e0e0e0;text-align:center;padding:3.2rem 2rem}
+    .episodes-hero p{color:#666}
+
+    /* Carrousel */
+    .row{max-width:1100px;margin:1rem auto 2.5rem;padding:0 1rem}
+    .row h3{margin:0 0 .75rem 0}
+    .carousel{
+      display:grid; grid-template-columns: 40px 1fr 40px; gap:.5rem; align-items:center;
+    }
+    .track{
+      display:flex; gap:1rem; overflow-x:auto; scroll-snap-type:x mandatory; padding: .25rem .25rem 1rem;
+      scrollbar-width:thin;
+    }
+    .track::-webkit-scrollbar{height:8px}
+    .track::-webkit-scrollbar-thumb{background:#ddd;border-radius:999px}
+    .snap{scroll-snap-align:start; flex:0 0 240px}
+    .btn-nav{
+      background:#fff;border:1px solid #e0e0e0;border-radius:10px; width:40px;height:40px;display:grid;place-items:center;cursor:pointer;
+      box-shadow:0 2px 6px rgba(0,0,0,.05)
+    }
+    .btn-nav:disabled{opacity:.4;cursor:default}
+    .card-ep{
+      background:#fff;border:1px solid #e0e0e0;border-radius:12px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.05);
+    }
+    .thumb{
+      position:relative;width:100%;padding-top:177.78%; /* Shorts 9:16 */
+      background:#000;overflow:hidden;
+    }
+    .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .thumb .play{
+      position:absolute;bottom:.5rem;right:.5rem;background:rgba(0,0,0,.6);color:#fff;border-radius:999px;padding:.35rem .55rem;font-size:.9rem
+    }
+    .meta{padding:.75rem}
+    .meta h4{margin:0 0 .35rem 0;font-size:1rem;color:#222}
+    .meta p{margin:0;color:#666;font-size:.92rem}
+    .meta .pill{display:inline-block;margin-top:.5rem;border:1px solid #ddd;border-radius:999px;padding:.15rem .5rem;font-size:.8rem;color:#555}
+
+    /* Modale vidéo (verticale possible) */
+    .video-modal { position: fixed; inset: 0; display: none; z-index: 1000; overflow-y: auto; }
+    .video-modal[aria-hidden="false"] { display: block; }
+    .video-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); }
+    .video-dialog {
+      position: relative; margin: 6vh auto; width: min(900px, 92vw); max-height: 88vh; background:#fff; border-radius:12px;
+      box-shadow:0 10px 30px rgba(0,0,0,.2); overflow:hidden;
+    }
+    .video-dialog.vertical { width: min(420px, 92vw); }
+    .video-header { display:flex; justify-content:space-between; align-items:center; padding:.75rem 1rem; border-bottom:1px solid #eee; }
+    .video-header h3 { margin:0; }
+    .video-close { background:transparent;border:0;font-size:1.5rem;cursor:pointer;color:#444 }
+    .video-close:hover{ color:#00798c }
+    .video-body{ padding:0 }
+    .video-frame { position:relative; width:100%; padding-top:56.25% } /* 16:9 par défaut */
+    .video-frame.vertical { padding-top:177.78% } /* Shorts */
+    .video-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0 }
+
+    @media (max-width: 640px){
+      .video-dialog { width: 96vw; margin:3vh auto; }
+      .video-dialog.vertical { width: 96vw; }
+      .snap{flex-basis: 78vw;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-wrap">
+      <div class="branding">
+        <img src="logo.png" alt="Logo Voix d'Ailleurs" class="logo">
+        <h1>Voix d'Ailleurs <span class="subtitle">Podcast</span></h1>
+      </div>
+      <nav>
+        <ul class="nav-wrap">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="about.html">À propos</a></li>
+          <li><a href="episodes.html" aria-current="page">Épisodes</a></li>
+          <li><a href="resources.html">Ressources</a></li>
+          <li><a href="donation.html">Don</a></li>
+          <li><a href="forum.html">Forum</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="social-icons" aria-label="Réseaux sociaux">
+        <a href="https://www.youtube.com/@SansFrontières-SF" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://www.tiktok.com/@toncompte" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://www.twitch.tv/toncompte" target="_blank" aria-label="Twitch"><i class="fa-brands fa-twitch"></i></a>
+        <a href="https://www.facebook.com/tonpage" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://www.patreon.com/toncompte" target="_blank" aria-label="Patreon"><i class="fa-brands fa-patreon"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="episodes-hero">
+    <div class="container">
+      <h2>Épisodes</h2>
+      <p>Nos derniers formats — version courte “Shorts”.</p>
+    </div>
+  </section>
+
+  <!-- Carrousel 1 -->
+  <section class="row">
+    <h3>🎧 Les plus récents</h3>
+    <div class="carousel">
+      <button class="btn-nav prev1" aria-label="Précédent"><i class="fa-solid fa-chevron-left"></i></button>
+      <div class="track t1" id="track-recent" tabindex="0">
+        <!-- Cartes injectées par JS -->
+      </div>
+      <button class="btn-nav next1" aria-label="Suivant"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+  </section>
+
+  <!-- Carrousel 2 (exemple autre liste, on réutilise les mêmes 2 pour démo) -->
+  <section class="row">
+    <h3>🔥 À (re)voir</h3>
+    <div class="carousel">
+      <button class="btn-nav prev2" aria-label="Précédent"><i class="fa-solid fa-chevron-left"></i></button>
+      <div class="track t2" id="track-popular" tabindex="0">
+        <!-- Cartes injectées par JS -->
+      </div>
+      <button class="btn-nav next2" aria-label="Suivant"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Voix d’Ailleurs — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <!-- Modale lecteur -->
+  <div class="video-modal" id="video-modal" aria-hidden="true">
+    <div class="video-backdrop" id="video-backdrop"></div>
+    <div class="video-dialog" id="video-dialog" role="dialog" aria-modal="true" aria-labelledby="video-title">
+      <div class="video-header">
+        <h3 id="video-title">Lecture</h3>
+        <button class="video-close" id="video-close" aria-label="Fermer">×</button>
+      </div>
+      <div class="video-body">
+        <div class="video-frame" id="video-frame">
+          <iframe id="video-iframe"
+            title="Lecteur YouTube"
+            src=""
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === Données de tes vidéos (Shorts) ===
+    const videos = [
+      {
+        url: "https://youtube.com/shorts/CV7gZFnjvms",
+        id: "CV7gZFnjvms",
+        title: "Sans Frontière — Portrait 1",
+        desc: "Un format court pour découvrir un parcours.",
+        date: "2025-09-05"
+      },
+      {
+        url: "https://youtube.com/shorts/BFk-HKRczbM",
+        id: "BFk-HKRczbM",
+        title: "Sans Frontière — Portrait 2",
+        desc: "Un moment fort en 60 secondes.",
+        date: "2025-09-05"
+      }
+    ];
+
+    // Utilitaire thumbnail (hqdefault marche aussi pour Shorts)
+    const thumb = (id) => `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+
+    // Rendu des cartes dans un track donné
+    function renderCards(trackEl){
+      videos.forEach(v => {
+        const a = document.createElement('article');
+        a.className = 'card-ep snap';
+        a.innerHTML = `
+          <button class="thumb" data-id="${v.id}" data-title="${escapeHtml(v.title)}" aria-label="Lire ${escapeHtml(v.title)}">
+            <img src="${thumb(v.id)}" alt="Vignette ${escapeHtml(v.title)}">
+            <span class="play"><i class="fa-solid fa-play"></i></span>
+          </button>
+          <div class="meta">
+            <h4>${escapeHtml(v.title)}</h4>
+            <p>${escapeHtml(v.desc)}</p>
+            <span class="pill">Shorts</span>
+          </div>
+        `;
+        trackEl.appendChild(a);
+      });
+    }
+
+    // Carrousels
+    const t1 = document.getElementById('track-recent');
+    const t2 = document.getElementById('track-popular');
+    renderCards(t1);
+    renderCards(t2);
+
+    // Boutons nav
+    const bindNav = (prevSel, nextSel, track) => {
+      const prev = document.querySelector(prevSel);
+      const next = document.querySelector(nextSel);
+      const step = () => Math.min(320, track.clientWidth * 0.8);
+      prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+      next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+    };
+    bindNav('.prev1','.next1', t1);
+    bindNav('.prev2','.next2', t2);
+
+    // === Modale lecteur ===
+    const modal  = document.getElementById('video-modal');
+    const dialog = document.getElementById('video-dialog');
+    const frame  = document.getElementById('video-frame');
+    const iframe = document.getElementById('video-iframe');
+    const closeB = document.getElementById('video-close');
+    const back   = document.getElementById('video-backdrop');
+
+    function openPlayer(id, title, isShort=true){
+      // Shorts => vertical
+      if(isShort){ frame.classList.add('vertical'); dialog.classList.add('vertical'); }
+      else       { frame.classList.remove('vertical'); dialog.classList.remove('vertical'); }
+      // Embed standard nocookie (pas /shorts/)
+      const params = "autoplay=1&rel=0&modestbranding=1&playsinline=1";
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?${params}`;
+      document.getElementById('video-title').textContent = title || "Lecture";
+      modal.setAttribute('aria-hidden','false');
+    }
+    function closePlayer(){
+      modal.setAttribute('aria-hidden','true');
+      iframe.src = "";
+    }
+    closeB.addEventListener('click', closePlayer);
+    back.addEventListener('click', closePlayer);
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') closePlayer(); });
+
+    // Ouvrir au clic vignette
+    document.body.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.thumb');
+      if(!btn) return;
+      openPlayer(btn.dataset.id, btn.dataset.title, true); // Shorts => true
+    });
+
+    // Helpers
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+  </script>
+</body>
+</html>
