@@ -1,3 +1,26 @@
+.branding {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo {
+  height: 40px; /* ajuste selon la taille de ton image */
+  width: auto;
+}
+
+.branding h1 {
+  font-size: 1.4rem;
+  margin: 0;
+  color: #444;
+}
+
+.branding .subtitle {
+  font-weight: 400;
+  font-size: 1rem;
+  color: #666;
+}
+
 /* Reset */
 * {
   margin: 0;
@@ -122,4 +145,23 @@ footer {
   text-align: center;
   padding: 1rem 0;
   border-top: 1px solid #ddd;
+}
+/* Alignement du header */
+.header-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* espace entre branding et reste */
+}
+
+/* Navigation + icônes alignés ensemble à droite */
+.nav-wrap {
+  display: flex;
+  gap: 1.5rem;
+  margin-right: 1.5rem; /* petit espace avant les icônes */
+}
+
+.social-icons {
+  display: flex;
+  gap: 0.75rem;
+  margin-left: auto; /* pousse les icônes complètement à droite */
 }
