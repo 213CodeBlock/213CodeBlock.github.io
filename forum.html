@@ -4,18 +4,75 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Forum — Voix d'Ailleurs</title>
+
+  <!-- Styles globaux -->
   <link rel="stylesheet" href="style.css?v=2">
   <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" href="images/logo2.png">
-  <!-- Font Awesome pour les icônes -->
+  <link rel="icon" type="image/png" href="logo.png">
+
+  <!-- Icônes sociales (Font Awesome) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" crossorigin="anonymous"></script>
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Styles spécifiques au forum -->
+  <style>
+    .forum-hero{background:#f5f5f0;border-bottom:1px solid #e0e0e0;text-align:center;padding:3rem 2rem}
+    .breadcrumbs{font-size:.92rem;color:#666;margin-bottom:1rem;text-align:center}
+
+    .forum-layout{max-width:1100px;margin:2rem auto;display:grid;grid-template-columns:1fr 320px;gap:1.5rem}
+    @media (max-width: 980px){.forum-layout{grid-template-columns:1fr}}
+
+    .card{background:#fff;border:1px solid #e0e0e0;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+    .card-header{padding:1rem 1.25rem;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
+    .card-title{margin:0;color:#00798c;font-size:1.1rem}
+    .card-body{padding:1rem 1.25rem}
+
+    /* catégories */
+    .categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+    .category{border:1px solid #e8e8e8;border-radius:8px;padding:1rem;background:#fff}
+    .category h4{margin-bottom:.25rem;color:#333;font-size:1rem}
+    .category p{color:#666;font-size:.95rem;margin-bottom:.5rem}
+    .category small{color:#888}
+
+    /* sujets */
+    .topic-table{width:100%;border-collapse:collapse;font-size:.97rem}
+    .topic-table th,.topic-table td{padding:.75rem;border-bottom:1px solid #eee;text-align:left;vertical-align:top}
+    .topic-table th{color:#444;font-weight:600;background:#fafafa}
+    .topic-title{color:#00798c;text-decoration:none;font-weight:600}
+    .topic-title:hover{text-decoration:underline}
+    .topic-meta{color:#777;font-size:.85rem}
+
+    /* formulaire nouveau sujet */
+    .new-topic-form{display:grid;gap:.75rem}
+    .form-row{display:grid;gap:.4rem}
+    .form-row label{font-weight:600;color:#444}
+    .form-row input[type="text"], .form-row textarea, .form-row select{
+      width:100%;padding:.75rem;border:1px solid #ddd;border-radius:8px;background:#fff;color:#333
+    }
+    .form-row textarea{min-height:140px;resize:vertical}
+    .btn-primary{display:inline-block;background:#ffeecf;color:#444;padding:.7rem 1.1rem;border-radius:8px;border:none;font-weight:700;cursor:pointer}
+    .btn-primary:hover{background:#ffdca8}
+
+    /* aside */
+    .aside{position:sticky;top:1rem;height:max-content}
+    .stat{display:flex;justify-content:space-between;margin-bottom:.4rem;color:#555}
+    .tag-list{display:flex;flex-wrap:wrap;gap:.5rem}
+    .tag{background:#f0f7f8;color:#276973;border:1px solid #d6ecef;padding:.25rem .5rem;border-radius:999px;font-size:.85rem}
+
+    /* pagination */
+    .pagination{display:flex;gap:.5rem;align-items:center}
+    .pagination a{text-decoration:none;color:#444;border:1px solid #ddd;padding:.4rem .7rem;border-radius:6px}
+    .pagination a:hover{border-color:#00798c;color:#00798c}
+  </style>
 </head>
 <body>
 
+  <!-- Header (identique aux autres pages) -->
   <header>
     <div class="container header-wrap">
       <div class="branding">
-        <img src="logo2.png" alt="Logo Voix d'Ailleurs" class="logo">
+        <img src="logo.png" alt="Logo Voix d'Ailleurs" class="logo">
         <h1>Voix d'Ailleurs <span class="subtitle">Podcast</span></h1>
       </div>
       <nav>
@@ -38,24 +95,136 @@
     </div>
   </header>
 
-  <section class="hero">
+  <!-- Hero -->
+  <section class="forum-hero">
     <div class="container">
-      <h2>Forum</h2>
-      <p>Un espace pour échanger, partager vos expériences et poser vos questions.</p>
+      <p class="breadcrumbs">Accueil ▸ Forum</p>
+      <h2>Le forum de la communauté</h2>
+      <p>Échanger, poser des questions, partager des ressources et des témoignages autour du podcast.</p>
     </div>
   </section>
 
-  <main class="container">
-    <section class="about">
-      <h3>Discussions récentes</h3>
-      <p>👉 Ici tu pourras intégrer ton futur système de forum (discussions, réponses, etc.).</p>
-      <ul>
-        <li><a href="#">[Exemple] Présentez-vous ici</a></li>
-        <li><a href="#">[Exemple] Vos ressources utiles</a></li>
-        <li><a href="#">[Exemple] Questions fréquentes</a></li>
-      </ul>
+  <!-- Layout -->
+  <main class="forum-layout">
+    <!-- Colonne principale : Catégories -->
+    <section aria-labelledby="forum-categories" class="card">
+      <div class="card-header">
+        <h3 id="forum-categories" class="card-title">Catégories</h3>
+      </div>
+      <div class="card-body">
+        <div class="categories" role="list">
+          <article class="category" role="listitem">
+            <h4>Parcours & témoignages</h4>
+            <p>Racontez votre histoire, vos étapes, vos conseils.</p>
+            <small><span id="stat-cat-parcours">152</span> sujets • Dernier message : il y a 2 j</small>
+          </article>
+          <article class="category" role="listitem">
+            <h4>Démarches & droits</h4>
+            <p>Questions sur l’asile, titres de séjour, travail, santé.</p>
+            <small><span id="stat-cat-demarches">312</span> sujets • Dernier message : il y a 4 h</small>
+          </article>
+          <article class="category" role="listitem">
+            <h4>Hébergement & entraide</h4>
+            <p>Solutions d’accueil, entraide, aides locales.</p>
+            <small><span id="stat-cat-hebergement">98</span> sujets • Dernier message : il y a 1 j</small>
+          </article>
+          <article class="category" role="listitem">
+            <h4>Annonces du podcast</h4>
+            <p>Nouveaux épisodes, coulisses, appels à témoignages.</p>
+            <small><span id="stat-cat-annonces">27</span> sujets • Dernier message : il y a 6 h</small>
+          </article>
+        </div>
+      </div>
     </section>
+
+    <!-- Aside -->
+    <aside class="aside" aria-labelledby="forum-aside">
+      <div class="card" style="margin-bottom:1rem;">
+        <div class="card-header"><h3 id="forum-aside" class="card-title">En un coup d’œil</h3></div>
+        <div class="card-body">
+          <div class="stat"><span>Membres</span><strong id="stat-members">1 284</strong></div>
+          <div class="stat"><span>Sujets</span><strong id="stat-topics">639</strong></div>
+          <div class="stat"><span>Messages</span><strong id="stat-posts">4 902</strong></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h3 class="card-title">Tags populaires</h3></div>
+        <div class="card-body">
+          <div class="tag-list" aria-label="Tags populaires">
+            <span class="tag">asile</span>
+            <span class="tag">hébergement</span>
+            <span class="tag">travail</span>
+            <span class="tag">santé</span>
+            <span class="tag">dépôt dossier</span>
+            <span class="tag">études</span>
+          </div>
+        </div>
+      </div>
+    </aside>
   </main>
+
+  <!-- Sujets récents -->
+  <section class="card" style="max-width:1100px;margin:0 auto 2rem" aria-labelledby="recent-topics">
+    <div class="card-header">
+      <h3 id="recent-topics" class="card-title">Sujets récents</h3>
+      <nav class="pagination" aria-label="Pagination des sujets">
+        <a href="#" aria-label="Page précédente">‹</a>
+        <a href="#" aria-current="page">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#" aria-label="Page suivante">›</a>
+      </nav>
+    </div>
+    <div class="card-body" style="overflow-x:auto;">
+      <table class="topic-table" role="table" id="topics-table">
+        <thead>
+          <tr>
+            <th scope="col">Sujet</th>
+            <th scope="col">Catégorie</th>
+            <th scope="col">Réponses</th>
+            <th scope="col">Activité</th>
+          </tr>
+        </thead>
+        <tbody id="topics-body">
+          <!-- lignes injectées par JS -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Nouveau sujet -->
+  <section class="card" style="max-width:1100px;margin:0 auto 3rem" aria-labelledby="new-topic">
+    <div class="card-header">
+      <h3 id="new-topic" class="card-title">Créer un nouveau sujet</h3>
+    </div>
+    <div class="card-body">
+      <form class="new-topic-form" id="new-topic-form">
+        <div class="form-row">
+          <label for="topic-title-input">Titre</label>
+          <input type="text" id="topic-title-input" name="title" placeholder="Ex. Vos conseils pour la première inscription OFII" required />
+        </div>
+        <div class="form-row">
+          <label for="topic-category-select">Catégorie</label>
+          <select id="topic-category-select" name="category" required>
+            <option value="" disabled selected>Choisir une catégorie</option>
+            <option>Parcours & témoignages</option>
+            <option>Démarches & droits</option>
+            <option>Hébergement & entraide</option>
+            <option>Annonces du podcast</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="topic-content-textarea">Message</label>
+          <textarea id="topic-content-textarea" name="content" placeholder="Décrivez votre situation ou votre question…" required></textarea>
+        </div>
+        <div>
+          <button type="submit" class="btn-primary">Publier</button>
+        </div>
+      </form>
+      <p class="topic-meta" style="margin-top:.5rem;">Les publications sont modérées avant mise en ligne (démo).</p>
+    </div>
+  </section>
 
   <footer>
     <div class="container">
@@ -63,5 +232,83 @@
     </div>
   </footer>
 
+  <!-- JS Supabase : liste + création -->
+  <script>
+    // ⚠️ REMPLACE ces deux constantes par celles de ton projet (Settings > API)
+    const SUPABASE_URL = "https://snhadtomnrztwbnludko.supabase.co";   // ← à remplacer
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNuaGFkdG9tbnJ6dHdibmx1ZGtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY5OTMyNzcsImV4cCI6MjA3MjU2OTI3N30.2NETqi1UBU6wlVasIHDu5Fv8NVSu5m1KN3CR1vwgKnc";                  // ← à remplacer
+
+    const { createClient } = supabase;
+    const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const tbody = document.getElementById('topics-body');
+    const form  = document.getElementById('new-topic-form');
+
+    function esc(s){ return String(s).replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
+    function fmt(iso){
+      try { return new Date(iso).toLocaleString('fr-FR',{dateStyle:'medium', timeStyle:'short'}); }
+      catch { return iso; }
+    }
+
+    function addRow(t, prepend=false){
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>
+          <a href="topic.html?id=${t.id}" class="topic-title">${esc(t.title)}</a>
+          <div class="topic-meta">par ${esc(t.author||'Invité')} • ${fmt(t.created_at)}</div>
+        </td>
+        <td>${esc(t.category)}</td>
+        <td>${t.reply_count ?? 0}</td>
+        <td>${fmt(t.created_at)}</td>`;
+      if(prepend) tbody.prepend(tr); else tbody.appendChild(tr);
+    }
+
+    async function loadTopics(){
+      const { data, error } = await db
+        .from('topics_view')   // vue créée via le script SQL fourni
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(50);
+
+      if(error){
+        console.error(error);
+        tbody.innerHTML = `<tr><td colspan="4">Impossible de charger les sujets.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = '';
+      data.forEach(t => addRow(t));
+    }
+
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const title = document.getElementById('topic-title-input').value.trim();
+      const category = document.getElementById('topic-category-select').value;
+      const content = document.getElementById('topic-content-textarea').value.trim();
+      if(!title || !category || !content) return;
+
+      const { data, error } = await db.from('topics')
+        .insert({ title, category, content, author: null })
+        .select('*').single();
+
+      if(error){ alert('Erreur: ' + error.message); return; }
+
+      addRow(data, true);
+      e.target.reset();
+      document.getElementById('topic-category-select').selectedIndex = 0;
+      alert('Sujet publié !');
+    });
+
+    // (Optionnel) temps réel : nouveaux sujets apparaissent automatiquement
+    try {
+      db.channel('public:topics')
+        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'topics' }, (payload) => {
+          const t = payload.new;
+          addRow({ ...t, reply_count: 0 }, true);
+        })
+        .subscribe();
+    } catch(e){ console.warn('Realtime non disponible :', e); }
+
+    loadTopics();
+  </script>
 </body>
 </html>
