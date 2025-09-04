@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Contact — Voix d'Ailleurs</title>
+  <link rel="stylesheet" href="style.css?v=2">
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="logo.png">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    .admin-wrap{max-width:1100px;margin:2rem auto}
+    .card{background:#fff;border:1px solid #e0e0e0;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.05);margin-bottom:1rem}
+    .card-header{padding:1rem 1.25rem;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
+    .card-body{padding:1rem 1.25rem}
+    .muted{color:#777}
+    .btn{display:inline-block;background:#ffeecf;color:#444;padding:.6rem 1rem;border-radius:8px;border:none;font-weight:700;cursor:pointer}
+    .btn:hover{background:#ffdca8}
+    .btn-danger{background:#ffe1e1}
+    .btn-danger:hover{background:#ffc9c9}
+    .list{width:100%;border-collapse:collapse}
+    .list th,.list td{padding:.6rem;border-bottom:1px solid #eee;text-align:left;vertical-align:top}
+    .pill{display:inline-block;border:1px solid #ddd;border-radius:999px;padding:.2rem .5rem;font-size:.85rem;margin-left:.5rem}
+    .row-actions{display:flex;gap:.5rem;align-items:center}
+    .search{display:flex;gap:.5rem;flex-wrap:wrap}
+    .search input{padding:.6rem .8rem;border:1px solid #ddd;border-radius:8px}
+    .message{white-space:pre-wrap}
+    details summary{cursor:pointer;color:#00798c}
+    .login-box{max-width:520px;margin:3rem auto}
+    .login-box input{width:100%;padding:.75rem;border:1px solid #ddd;border-radius:8px;margin:.5rem 0}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-wrap">
+      <div class="branding">
+        <img src="logo.png" alt="Logo Voix d'Ailleurs" class="logo">
+        <h1>Voix d'Ailleurs <span class="subtitle">Podcast</span></h1>
+      </div>
+      <nav>
+        <ul class="nav-wrap">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="about.html">À propos</a></li>
+          <li><a href="donation.html">Don</a></li>
+          <li><a href="forum.html">Forum</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="social-icons"></div>
+    </div>
+  </header>
+
+  <main class="admin-wrap">
+
+    <!-- Connexion -->
+    <section class="card" id="login-card">
+      <div class="card-header">
+        <h3>Connexion admin</h3>
+      </div>
+      <div class="card-body login-box">
+        <p class="muted">Saisis ton adresse email pour recevoir un lien magique de connexion.</p>
+        <input type="email" id="email" placeholder="vous@example.com" />
+        <button class="btn" id="send-link">Recevoir le lien</button>
+        <p id="login-status" class="muted" style="margin-top:.5rem;"></p>
+      </div>
+    </section>
+
+    <!-- Tableau messages -->
+    <section class="card" id="admin-card" style="display:none;">
+      <div class="card-header">
+        <h3>Messages reçus</h3>
+        <div class="row-actions">
+          <div class="search">
+            <input type="text" id="q" placeholder="Rechercher (nom, email, sujet)" />
+            <button class="btn" id="refresh">Rafraîchir</button>
+          </div>
+          <button class="btn pill" id="logout">Se déconnecter</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <table class="list" id="table">
+          <thead>
+            <tr>
+              <th>De</th>
+              <th>Email</th>
+              <th>Sujet</th>
+              <th>Message</th>
+              <th>Reçu</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr><td colspan="6" class="muted">Chargement…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Voix d’Ailleurs — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script>
+    const SUPABASE_URL = "https://snhadtomnrztwbnludko.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNuaGFkdG9tbnJ6dHdibmx1ZGtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY5OTMyNzcsImV4cCI6MjA3MjU2OTI3N30.2NETqi1UBU6wlVasIHDu5Fv8NVSu5m1KN3CR1vwgKnc"; // ← remplace par ta clé "anon" (Settings > API)
+
+    const { createClient } = supabase;
+    const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const loginCard = document.getElementById('login-card');
+    const adminCard = document.getElementById('admin-card');
+    const loginStatus = document.getElementById('login-status');
+
+    const emailInput = document.getElementById('email');
+    const sendLinkBtn = document.getElementById('send-link');
+    const logoutBtn = document.getElementById('logout');
+    const refreshBtn = document.getElementById('refresh');
+    const tbody = document.getElementById('tbody');
+    const q = document.getElementById('q');
+
+    function esc(s){ return String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+    function fmtDate(iso){ try { return new Date(iso).toLocaleString('fr-FR',{ dateStyle:'medium', timeStyle:'short' }); } catch { return iso; } }
+
+    function setLoggedInUI(on){
+      loginCard.style.display = on ? 'none' : '';
+      adminCard.style.display = on ? '' : 'none';
+    }
+
+    async function loadSession(){
+      const { data: { session } } = await db.auth.getSession();
+      setLoggedInUI(!!session);
+      if(session){ await loadMessages(); subscribeRealtime(); }
+    }
+
+    async function sendMagicLink(){
+      const email = emailInput.value.trim();
+      if(!email){ loginStatus.textContent = "Saisis un email."; return; }
+      loginStatus.textContent = "Envoi du lien…";
+      const redirectTo = window.location.origin + window.location.pathname; // revient sur cette page
+      const { error } = await db.auth.signInWithOtp({ email, options:{ emailRedirectTo: redirectTo }});
+      if(error){ loginStatus.textContent = "Erreur: " + error.message; return; }
+      loginStatus.textContent = "Lien envoyé ! Vérifie ta boîte mail.";
+    }
+
+    async function signOut(){
+      await db.auth.signOut();
+      tbody.innerHTML = '';
+      setLoggedInUI(false);
+    }
+
+    async function loadMessages(){
+      tbody.innerHTML = '<tr><td colspan="6" class="muted">Chargement…</td></tr>';
+      // simple recherche côté client après fetch
+      const { data, error } = await db
+        .from('contact_messages')
+        .select('*')
+        .order('created_at', { ascending:false })
+        .limit(200);
+      if(error){ tbody.innerHTML = '<tr><td colspan="6">Erreur de chargement.</td></tr>'; return; }
+
+      const needle = q.value.trim().toLowerCase();
+      const rows = needle
+        ? data.filter(r =>
+            [r.name, r.email, r.subject, r.message].some(x => (x||'').toLowerCase().includes(needle))
+          )
+        : data;
+
+      if(!rows.length){ tbody.innerHTML = '<tr><td colspan="6" class="muted">Aucun message.</td></tr>'; return; }
+
+      tbody.innerHTML = '';
+      for(const m of rows){
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${esc(m.name)}</td>
+          <td><a href="mailto:${esc(m.email)}">${esc(m.email)}</a></td>
+          <td>${esc(m.subject)}</td>
+          <td>
+            <details>
+              <summary>Voir</summary>
+              <div class="message">${esc(m.message)}</div>
+            </details>
+          </td>
+          <td>${fmtDate(m.created_at)}</td>
+          <td class="row-actions">
+            <button class="btn btn-danger" data-id="${m.id}">Supprimer</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    async function deleteMessage(id){
+      if(!confirm("Supprimer ce message ?")) return;
+      const { error } = await db.from('contact_messages').delete().eq('id', id);
+      if(error){ alert("Erreur: " + error.message); return; }
+      await loadMessages();
+    }
+
+    function subscribeRealtime(){
+      try{
+        db.channel('public:contact_messages')
+          .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'contact_messages' }, loadMessages)
+          .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'contact_messages' }, loadMessages)
+          .subscribe();
+      }catch(e){ console.warn('Realtime indisponible', e); }
+    }
+
+    // events
+    sendLinkBtn.addEventListener('click', sendMagicLink);
+    logoutBtn.addEventListener('click', signOut);
+    refreshBtn.addEventListener('click', loadMessages);
+    q.addEventListener('input', () => loadMessages());
+    tbody.addEventListener('click', (e)=>{
+      const btn = e.target.closest('button[data-id]');
+      if(btn) deleteMessage(btn.dataset.id);
+    });
+
+    loadSession();
+  </script>
+</body>
+</html>

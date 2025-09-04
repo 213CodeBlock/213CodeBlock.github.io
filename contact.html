@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — Voix d'Ailleurs</title>
+  <link rel="stylesheet" href="style.css?v=2">
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="logo.png">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    .contact-hero{background:#f5f5f0;border-bottom:1px solid #e0e0e0;text-align:center;padding:3rem 2rem}
+    .contact-wrap{max-width:800px;margin:2rem auto}
+    .card{background:#fff;border:1px solid #e0e0e0;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+    .card-header{padding:1rem 1.25rem;border-bottom:1px solid #eee}
+    .card-body{padding:1rem 1.25rem}
+    .form{display:grid;gap:.9rem}
+    .row{display:grid;gap:.4rem}
+    .row label{font-weight:600;color:#444}
+    .row input,.row textarea{
+      width:100%;padding:.75rem;border:1px solid #ddd;border-radius:8px;background:#fff;color:#333
+    }
+    .row textarea{min-height:140px;resize:vertical}
+    .btn-primary{display:inline-block;background:#ffeecf;color:#444;padding:.75rem 1.25rem;border-radius:8px;border:none;font-weight:700;cursor:pointer}
+    .btn-primary:hover{background:#ffdca8}
+    .muted{color:#777;font-size:.92rem}
+    .success{background:#f0fff4;border:1px solid #b7ebc6;color:#276738;padding:.75rem 1rem;border-radius:8px}
+    .error{background:#fff5f5;border:1px solid #ffc9c9;color:#7d1d1d;padding:.75rem 1rem;border-radius:8px}
+    /* Anti-spam (honeypot) */
+    .hp{position:absolute;left:-9999px;opacity:0;pointer-events:none}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container header-wrap">
+      <div class="branding">
+        <img src="logo.png" alt="Logo Voix d'Ailleurs" class="logo">
+        <h1>Voix d'Ailleurs <span class="subtitle">Podcast</span></h1>
+      </div>
+      <nav>
+        <ul class="nav-wrap">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="about.html">À propos</a></li>
+          <li><a href="#">Épisodes</a></li>
+          <li><a href="#">Ressources</a></li>
+          <li><a href="donation.html">Don</a></li>
+          <li><a href="forum.html">Forum</a></li>
+          <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="social-icons">
+        <a href="https://www.youtube.com/@SansFrontières-SF" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://www.tiktok.com/@toncompte" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://www.twitch.tv/toncompte" target="_blank" aria-label="Twitch"><i class="fa-brands fa-twitch"></i></a>
+        <a href="https://www.facebook.com/tonpage" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://www.patreon.com/toncompte" target="_blank" aria-label="Patreon"><i class="fa-brands fa-patreon"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <section class="contact-hero">
+    <div class="container">
+      <h2>Nous écrire</h2>
+      <p>Une suggestion, un témoignage, une question ? On lit tous les messages.</p>
+    </div>
+  </section>
+
+  <main class="container contact-wrap">
+    <section class="card">
+      <div class="card-header"><h3>Formulaire de contact</h3></div>
+      <div class="card-body">
+        <div id="alert" aria-live="polite"></div>
+
+        <form id="contact-form" class="form" novalidate>
+          <!-- honeypot anti-spam -->
+          <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off">
+
+          <div class="row">
+            <label for="c-name">Nom</label>
+            <input id="c-name" name="name" type="text" placeholder="Votre nom" required>
+          </div>
+
+          <div class="row">
+            <label for="c-email">Email</label>
+            <input id="c-email" name="email" type="email" placeholder="vous@example.com" required>
+          </div>
+
+          <div class="row">
+            <label for="c-subject">Sujet</label>
+            <input id="c-subject" name="subject" type="text" placeholder="Sujet de votre message" required>
+          </div>
+
+          <div class="row">
+            <label for="c-message">Message</label>
+            <textarea id="c-message" name="message" placeholder="Votre message…" required></textarea>
+          </div>
+
+          <button class="btn-primary" type="submit">Envoyer</button>
+          <p class="muted">Vos infos ne seront utilisées que pour vous répondre.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Voix d’Ailleurs — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script>
+    // Supabase config
+    const SUPABASE_URL = "https://snhadtomnrztwbnludko.supabase.co"; // ton projet
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNuaGFkdG9tbnJ6dHdibmx1ZGtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY5OTMyNzcsImV4cCI6MjA3MjU2OTI3N30.2NETqi1UBU6wlVasIHDu5Fv8NVSu5m1KN3CR1vwgKnc";            // ⚠️ remplace par la clé anonyme (Project Settings → API)
+
+    const { createClient } = supabase;
+    const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const form = document.getElementById('contact-form');
+    const alertBox = document.getElementById('alert');
+
+    function showAlert(type, msg){
+      alertBox.innerHTML = `<div class="${type}">${msg}</div>`;
+    }
+
+    function validEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+
+      // Honeypot
+      if (form.website && form.website.value) {
+        showAlert('error', "Une erreur est survenue.");
+        return;
+      }
+
+      const name = document.getElementById('c-name').value.trim();
+      const email = document.getElementById('c-email').value.trim();
+      const subject = document.getElementById('c-subject').value.trim();
+      const message = document.getElementById('c-message').value.trim();
+
+      if(!name || !email || !subject || !message){
+        showAlert('error', "Merci de remplir tous les champs.");
+        return;
+      }
+      if(!validEmail(email)){
+        showAlert('error', "Votre email ne semble pas valide.");
+        return;
+      }
+
+      // Insertion dans Supabase
+      const { error } = await db.from('contact_messages').insert({
+        name, email, subject, message
+      });
+
+      if(error){
+        showAlert('error', "Impossible d'envoyer le message : " + error.message);
+        return;
+      }
+
+      showAlert('success', "Merci ! Votre message a bien été envoyé.");
+      form.reset();
+    });
+  </script>
+  <!-- Font Awesome pour les icônes (si nécessaire) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" crossorigin="anonymous"></script>
+</body>
+</html>
