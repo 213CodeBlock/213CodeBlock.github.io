@@ -7,15 +7,15 @@
 }
 
 body {
-  background: #fdfcf9; /* ton clair, légèrement chaud */
-  color: #2c2c2c;
+  background: #f8f5ef; /* beige chaud */
+  color: #2b2b2b;
   line-height: 1.6;
 }
 
 /* Header */
 header {
-  background: #ffffff;
-  border-bottom: 1px solid #e6e6e6;
+  background: #0f3d3e; /* bleu nuit */
+  border-bottom: 3px solid #f59e0b; /* trait orange */
   padding: 1rem 0;
 }
 
@@ -38,7 +38,7 @@ header {
 }
 
 header h1 {
-  color: #1c1c1c;
+  color: #fdfcf9; /* clair sur fond foncé */
   margin: 0;
   font-size: 1.6rem;
 }
@@ -46,7 +46,7 @@ header h1 {
 header h1 .subtitle {
   font-size: 0.9rem;
   font-weight: 400;
-  color: #777;
+  color: #f59e0b; /* accent orange */
   margin-left: 0.3rem;
 }
 
@@ -58,7 +58,7 @@ nav ul {
 }
 
 nav a {
-  color: #2c2c2c;
+  color: #fdfcf9; /* clair */
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s ease;
@@ -66,7 +66,7 @@ nav a {
 
 nav a:hover,
 nav a[aria-current="page"] {
-  color: #d97706; /* orange doré du logo */
+  color: #f59e0b; /* orange vif */
 }
 
 /* Icônes sociales */
@@ -78,49 +78,50 @@ nav a[aria-current="page"] {
 
 .social-icons a {
   font-size: 1.2rem;
-  color: #2c2c2c;
+  color: #fdfcf9;
   transition: color 0.2s ease;
 }
 
 .social-icons a:hover {
-  color: #0f3d3e; /* bleu nuit profond */
+  color: #f59e0b;
 }
 
 /* Hero */
 .hero {
-  background: #f8f7f3;
-  color: #1c1c1c;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #fff;
   text-align: center;
-  padding: 4rem 2rem;
-  border-bottom: 1px solid #e0e0e0;
+  padding: 5rem 2rem;
 }
 
 .hero h2 {
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
-  color: #0f3d3e; /* bleu nuit */
+  color: #fff;
 }
 
 .hero p {
   margin-bottom: 2rem;
-  color: #555;
+  color: #fdfcf9;
+  font-size: 1.2rem;
 }
 
 .btn {
   display: inline-block;
-  background: #f59e0b; /* orange vif */
+  background: #0f3d3e; /* bleu nuit */
   color: #fff;
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
   font-weight: bold;
   text-decoration: none;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
   cursor: pointer;
   border: none;
 }
 
 .btn:hover {
-  background: #d97706; /* orange doré */
+  background: #fdfcf9;
+  color: #0f3d3e;
 }
 
 /* Sections */
@@ -129,17 +130,33 @@ section {
 }
 
 section h3 {
-  color: #0f3d3e; /* bleu nuit */
+  color: #0f3d3e;
   margin-bottom: 1rem;
 }
 
+/* Alternance fond pour rythme */
+section:nth-of-type(even) {
+  background: #ffffff;
+}
+
+section:nth-of-type(odd) {
+  background: #f8f5ef;
+}
+
+/* Episode cards */
 .episode-card {
   background: #ffffff;
   border: 1px solid #e0e0e0;
   padding: 1.5rem;
   border-radius: 8px;
   margin-bottom: 1rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+}
+
+.episode-card:hover {
+  transform: translateY(-4px);
+  border-color: #f59e0b;
 }
 
 /* Ressources */
@@ -153,21 +170,21 @@ section h3 {
 }
 
 .resources a {
-  color: #2c2c2c;
+  color: #0f3d3e;
   text-decoration: none;
   border-bottom: 1px dotted #ccc;
 }
 
 .resources a:hover {
-  color: #d97706; /* orange doré */
-  border-bottom: 1px solid #d97706;
+  color: #f59e0b;
+  border-bottom: 1px solid #f59e0b;
 }
 
 /* Footer */
 footer {
-  background: #0f3d3e; /* bleu nuit */
+  background: #0f3d3e;
   color: #fdfcf9;
   text-align: center;
   padding: 1rem 0;
-  border-top: 1px solid #ddd;
+  border-top: 3px solid #f59e0b;
 }
