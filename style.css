@@ -7,8 +7,8 @@
 }
 
 body {
-  background: #faf9f6; /* ton très clair, beige/gris */
-  color: #333;
+  background: #fdfcf9; /* ton clair, légèrement chaud */
+  color: #2c2c2c;
   line-height: 1.6;
 }
 
@@ -33,14 +33,14 @@ header {
 }
 
 .branding .logo {
-  height: 40px;
+  height: 42px;
   width: auto;
 }
 
 header h1 {
-  color: #444;
+  color: #1c1c1c;
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
 }
 
 header h1 .subtitle {
@@ -58,46 +58,47 @@ nav ul {
 }
 
 nav a {
-  color: #444;
+  color: #2c2c2c;
   text-decoration: none;
   font-weight: 500;
+  transition: color 0.2s ease;
 }
 
 nav a:hover,
 nav a[aria-current="page"] {
-  color: #00798c; /* petite touche de couleur */
+  color: #d97706; /* orange doré du logo */
 }
 
 /* Icônes sociales */
 .social-icons {
   display: flex;
   gap: 0.75rem;
-  margin-left: auto; /* pousse bien les icônes à droite */
+  margin-left: auto;
 }
 
 .social-icons a {
   font-size: 1.2rem;
-  color: #444;
+  color: #2c2c2c;
   transition: color 0.2s ease;
 }
 
 .social-icons a:hover {
-  color: #00798c;
+  color: #0f3d3e; /* bleu nuit profond */
 }
 
 /* Hero */
 .hero {
-  background: #f5f5f0;
-  color: #222;
+  background: #f8f7f3;
+  color: #1c1c1c;
   text-align: center;
   padding: 4rem 2rem;
   border-bottom: 1px solid #e0e0e0;
 }
 
 .hero h2 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin-bottom: 1rem;
-  color: #222;
+  color: #0f3d3e; /* bleu nuit */
 }
 
 .hero p {
@@ -107,8 +108,8 @@ nav a[aria-current="page"] {
 
 .btn {
   display: inline-block;
-  background: #ffeecf; /* ton pastel doux */
-  color: #444;
+  background: #f59e0b; /* orange vif */
+  color: #fff;
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
   font-weight: bold;
@@ -119,7 +120,7 @@ nav a[aria-current="page"] {
 }
 
 .btn:hover {
-  background: #ffdca8;
+  background: #d97706; /* orange doré */
 }
 
 /* Sections */
@@ -128,7 +129,7 @@ section {
 }
 
 section h3 {
-  color: #00798c;
+  color: #0f3d3e; /* bleu nuit */
   margin-bottom: 1rem;
 }
 
@@ -152,20 +153,20 @@ section h3 {
 }
 
 .resources a {
-  color: #444;
+  color: #2c2c2c;
   text-decoration: none;
   border-bottom: 1px dotted #ccc;
 }
 
 .resources a:hover {
-  color: #00798c;
-  border-bottom: 1px solid #00798c;
+  color: #d97706; /* orange doré */
+  border-bottom: 1px solid #d97706;
 }
 
 /* Footer */
 footer {
-  background: #f0f0eb;
-  color: #555;
+  background: #0f3d3e; /* bleu nuit */
+  color: #fdfcf9;
   text-align: center;
   padding: 1rem 0;
   border-top: 1px solid #ddd;
