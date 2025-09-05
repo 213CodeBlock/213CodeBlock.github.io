@@ -1,11 +1,3 @@
-.branding .logo {
-  display: block;         /* évite le line-height qui peut surprendre */
-  height: 44px;
-  width: auto;
-  max-width: 200px;       /* sécurité si l’image est énorme */
-  image-rendering: auto;
-  object-fit: contain;    /* n’étire pas */
-}
 /* Reset */
 * {
   margin: 0;
@@ -15,15 +7,15 @@
 }
 
 body {
-  background: #f8f5ef; /* beige chaud */
-  color: #2b2b2b;
+  background: #f9f7f2; /* fond clair chaleureux */
+  color: #222;
   line-height: 1.6;
 }
 
 /* Header */
 header {
-  background: #0f3d3e; /* bleu nuit */
-  border-bottom: 3px solid #f59e0b; /* trait orange */
+  background: #083d3d; /* bleu pétrole foncé */
+  border-bottom: 3px solid #f4a261; /* accent orange doux */
   padding: 1rem 0;
 }
 
@@ -43,18 +35,21 @@ header {
 .branding .logo {
   height: 42px;
   width: auto;
+  max-width: 200px;
+  image-rendering: auto;
 }
 
 header h1 {
-  color: #fdfcf9; /* clair sur fond foncé */
+  color: #fff;
   margin: 0;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 header h1 .subtitle {
   font-size: 0.9rem;
   font-weight: 400;
-  color: #f59e0b; /* accent orange */
+  color: #ffdca8;
   margin-left: 0.3rem;
 }
 
@@ -66,7 +61,7 @@ nav ul {
 }
 
 nav a {
-  color: #fdfcf9; /* clair */
+  color: #fff;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s ease;
@@ -74,7 +69,7 @@ nav a {
 
 nav a:hover,
 nav a[aria-current="page"] {
-  color: #f59e0b; /* orange vif */
+  color: #f4a261; /* accent orange */
 }
 
 /* Icônes sociales */
@@ -85,51 +80,52 @@ nav a[aria-current="page"] {
 }
 
 .social-icons a {
-  font-size: 1.2rem;
-  color: #fdfcf9;
+  font-size: 1.3rem;
+  color: #fff;
   transition: color 0.2s ease;
 }
 
 .social-icons a:hover {
-  color: #f59e0b;
+  color: #f4a261;
 }
 
 /* Hero */
 .hero {
-  background: #f9f7f2; /* ton clair conservé */
+  background: #f0ede7; /* contraste plus marqué */
   text-align: center;
   padding: 4rem 2rem;
+  border-bottom: 1px solid #ddd;
 }
 
 .hero h2 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
-  color: #1d2d2f; /* bleu pétrole foncé */
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  color: #083d3d; /* bleu pétrole foncé */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .hero p {
+  margin-bottom: 2rem;
   font-size: 1.2rem;
-  color: #333; /* gris foncé lisible */
+  color: #333;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
 }
 
 .btn {
   display: inline-block;
-  background: #0f3d3e; /* bleu nuit */
+  background: #f4a261; /* orange doux */
   color: #fff;
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
   font-weight: bold;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease;
   cursor: pointer;
   border: none;
 }
 
 .btn:hover {
-  background: #fdfcf9;
-  color: #0f3d3e;
+  background: #e76f51; /* orange plus profond */
 }
 
 /* Sections */
@@ -138,33 +134,17 @@ section {
 }
 
 section h3 {
-  color: #0f3d3e;
+  color: #083d3d;
   margin-bottom: 1rem;
 }
 
-/* Alternance fond pour rythme */
-section:nth-of-type(even) {
-  background: #ffffff;
-}
-
-section:nth-of-type(odd) {
-  background: #f8f5ef;
-}
-
-/* Episode cards */
 .episode-card {
   background: #ffffff;
   border: 1px solid #e0e0e0;
   padding: 1.5rem;
   border-radius: 8px;
   margin-bottom: 1rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease;
-}
-
-.episode-card:hover {
-  transform: translateY(-4px);
-  border-color: #f59e0b;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 /* Ressources */
@@ -178,21 +158,21 @@ section:nth-of-type(odd) {
 }
 
 .resources a {
-  color: #0f3d3e;
+  color: #083d3d;
   text-decoration: none;
-  border-bottom: 1px dotted #ccc;
+  border-bottom: 1px dotted #aaa;
 }
 
 .resources a:hover {
-  color: #f59e0b;
-  border-bottom: 1px solid #f59e0b;
+  color: #e76f51;
+  border-bottom: 1px solid #e76f51;
 }
 
 /* Footer */
 footer {
-  background: #0f3d3e;
-  color: #fdfcf9;
+  background: #083d3d;
+  color: #fff;
   text-align: center;
   padding: 1rem 0;
-  border-top: 3px solid #f59e0b;
+  border-top: 3px solid #f4a261;
 }
