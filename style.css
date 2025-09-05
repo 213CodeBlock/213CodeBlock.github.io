@@ -1,3 +1,11 @@
+.branding .logo {
+  display: block;         /* évite le line-height qui peut surprendre */
+  height: 44px;
+  width: auto;
+  max-width: 200px;       /* sécurité si l’image est énorme */
+  image-rendering: auto;
+  object-fit: contain;    /* n’étire pas */
+}
 /* Reset */
 * {
   margin: 0;
